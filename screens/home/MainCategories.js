@@ -1,42 +1,64 @@
 import React from 'react';
-import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
 
-const MainCategories = ({categories, styles, onSelectCategory}) => {
+const MainCategories = ({
+  categories,
+  styles,
+  onSelectCategory,
+  selectedCategory,
+}) => {
   const renderItem = ({item}) => {
+    const mainCategoriesStyles = StyleSheet.create({
+      categoryIconContainer: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:
+          selectedCategory?.id === item.id ? COLORS.white : COLORS.lightGray,
+      },
+      categoryIcon: {
+        width: 30,
+        height: 30,
+      },
+      touchableCategoriesContainer: {
+        padding: SIZES.padding,
+        paddingBottom: SIZES.padding * 2,
+        backgroundColor:
+          selectedCategory?.id === item.id ? COLORS.primary : COLORS.white,
+        borderRadius: SIZES.radius,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: SIZES.padding,
+        ...styles.shadow,
+      },
+    });
+
     return (
       <TouchableOpacity
-        style={{
-          padding: SIZES.padding,
-          paddingBottom: SIZES.padding * 2,
-          backgroundColor: COLORS.primary,
-          borderRadius: SIZES.radius,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginRight: SIZES.padding,
-          ...styles.shadow,
-        }}
+        style={mainCategoriesStyles.touchableCategoriesContainer}
         onPress={() => onSelectCategory(item)}>
-        <View
-          style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: Colors.white,
-          }}>
+        <View style={mainCategoriesStyles.categoryIconContainer}>
           <Image
             source={item.icon}
             resizeMode="contain"
-            style={{width: 30, height: 30}}
+            style={mainCategoriesStyles.categoryIcon}
           />
         </View>
         <Text
           style={{
             marginTop: SIZES.padding,
-            color: COLORS.white,
+            color:
+              selectedCategory?.id === item.id ? COLORS.white : COLORS.black,
             ...FONTS.body5,
           }}>
           {item.name}

@@ -11,6 +11,7 @@ import {
 import {COLORS, icons, SIZES, FONTS} from '../../constants';
 import Header from './Header';
 import MainCategories from './MainCategories';
+import RestaurantList from './RestaurantList';
 import {
   categoryData,
   initialCurrentLocation,
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [categories, setCategories] = React.useState(categoryData);
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [restaurants, setRestaurants] = React.useState(restaurantData);
@@ -55,8 +56,15 @@ const Home = () => {
       <Header currentLocation={currentLocation} />
       <MainCategories
         categories={categories}
+        selectedCategory={selectedCategory}
         styles={styles}
         onSelectCategory={onSelectCategory}
+      />
+      <RestaurantList
+        restaurants={restaurants}
+        styles={styles}
+        categories={categories}
+        navigation={navigation}
       />
     </SafeAreaView>
   );
